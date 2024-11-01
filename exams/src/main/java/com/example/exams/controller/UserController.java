@@ -36,6 +36,13 @@ public class UserController {
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
+    @GetMapping("/api/users/exams")
+    public ResponseEntity<List<Exam>> getUserExams(@RequestHeader("Authorization") String jwt) throws Exception {
+        User user = userService.findUserProfileByJwt(jwt);
+        List<Exam> exams = userService.getUserExams(user);
+        return new ResponseEntity<>(exams, HttpStatus.OK);
+    }
+
     @PostMapping("/auth/users/reset-password/sendotp")
     public ResponseEntity<AuthResponse> sendForgotPasswordOtp(
             @RequestBody ForgotPasswordTokenRequest req) throws Exception {
