@@ -8,6 +8,7 @@ import lombok.Data;
 import java.util.List;
 
 @Entity
+@Table(name="app_user")
 @Data
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
@@ -16,13 +17,21 @@ public abstract class User {
     @Column(unique = true, nullable = false)
     protected String username;
 
-    protected String fullName;
+    private String fullName;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    protected String password;
+    private String password;
 
+    @Enumerated(EnumType.STRING)
     protected USER_ROLE role;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    protected List<String> userCourses;
+    @ElementCollection
+    @CollectionTable(
+            name = "user_courses",
+            joinColumns = @JoinColumn(name = "username")
+    )
+    @Column(name = "course_name")
+    private List<String> userCourses;
+
+    public abstract boolean equals(User user);
 }
