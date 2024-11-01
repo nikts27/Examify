@@ -1,5 +1,5 @@
 # Examify
-A university online exam portal
+A university online exam portal.
 Examify  allows examiners to create exams, add questions, and evaluate results, while enabling students to view, attempt, and submit exams.
 
 ---
