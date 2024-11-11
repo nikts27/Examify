@@ -2,7 +2,6 @@ package com.example.exams.service;
 
 import com.example.exams.model.User;
 import com.example.exams.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
