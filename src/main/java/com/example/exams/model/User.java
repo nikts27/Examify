@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name="app_user")
 @Data
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "dtype")
+@DiscriminatorColumn(name = "role")
 public abstract class User {
     @Id
     @Column(unique = true, nullable = false)
@@ -22,6 +22,7 @@ public abstract class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
+    @Column(insertable = false, updatable = false)
     @Enumerated(EnumType.STRING)
     protected USER_ROLE role;
 
