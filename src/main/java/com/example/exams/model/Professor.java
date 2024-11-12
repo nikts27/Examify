@@ -1,26 +1,17 @@
 package com.example.exams.model;
 
-import com.example.exams.domain.USER_ROLE;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
 
 @Entity
 @Data
-@DiscriminatorValue("PROFESSOR")
+@DiscriminatorValue("ROLE_PROFESSOR")
 public class Professor extends User {
 
     @ManyToMany(mappedBy = "professors")
     private List<Exam> examsCreated;
-
-    public Professor() {
-        super();
-        this.role = USER_ROLE.ROLE_PROFESSOR;
-    }
-
 
     @Override
     public boolean equals(User user) {
