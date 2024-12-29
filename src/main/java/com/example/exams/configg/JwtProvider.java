@@ -13,7 +13,7 @@ import java.util.Set;
 
 public class JwtProvider {
 
-    private static SecretKey key = Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
+    private static final SecretKey key = Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
     private static final int jwtExpirationMs = 1000 * 60 * 15;
     private static final int refreshTokenExpirationMs = 1000 * 60 * 60 * 24 * 7;
 
@@ -39,11 +39,24 @@ public class JwtProvider {
     }
 
     public static String getUsernameFromToken(String token) {
-        token = token.substring(7);
-        Claims claims = Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload();
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
 
-        return String.valueOf(claims.get("username"));
+        try {
+            Claims claims = Jwts.parser()
+                    .verifyWith(key)
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
+
+            return claims.get("username", String.class);
+        } catch (Exception e) {
+            System.err.println("Error parsing JWT: " + e.getMessage());
+        }
+        return null;
     }
+
 
     private static String populateAuthoritites(Collection<? extends GrantedAuthority> authorities) {
         Set<String> auth = new HashSet<String>();

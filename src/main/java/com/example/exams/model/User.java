@@ -34,5 +34,7 @@ public abstract class User {
     @Column(name = "course_name")
     private List<String> userCourses;
 
+    private String refreshToken;
+
     public abstract boolean equals(User user);
 }
