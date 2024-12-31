@@ -78,9 +78,20 @@ public class AuthController {
         String username = JwtProvider.getUsernameFromToken(refreshToken);
 
         User user = userRepository.findByUsername(username);
-        System.out.println("Username: " + user.getUsername());
-        System.out.println("Password: " + user.getPassword());
-        Authentication auth = authenticate(user.getUsername(), user.getPassword());
+
+        UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+        if (userDetails == null) {
+            System.out.println("User not found: " + username);
+            throw new BadCredentialsException("Invalid username!");
+        }
+
+        Authentication auth;
+        if (user.getPassword().equals(userDetails.getPassword())) {
+            auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        } else {
+            throw new BadCredentialsException("Invalid password!");
+        }
+
         String newAccessToken = JwtProvider.generateAccessToken(auth);
 
         AuthResponse res = new AuthResponse();

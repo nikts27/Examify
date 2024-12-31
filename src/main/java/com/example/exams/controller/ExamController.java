@@ -42,6 +42,12 @@ public class ExamController {
         return new ResponseEntity<>(exam, HttpStatus.ACCEPTED);
     }
 
+    @GetMapping
+    public ResponseEntity<List<Exam>> getAllExams() {
+        List<Exam> exams = examService.getAllExams();
+        return new ResponseEntity<>(exams, HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('PROFESSOR')")
     public ResponseEntity<?> deleteExam(
@@ -99,9 +105,9 @@ public class ExamController {
         return new ResponseEntity<>(examsEnrolled, HttpStatus.OK);
     }
 
-    private boolean isUserAllowed(Exam exam, User user) {
-        for(String user_course: user.getUserCourses()){
-            if (user_course.equals(exam.getCourseExamined())){
+    private boolean isUserAllowed(Exam exam, Professor prof) {
+        for(Course prof_course: prof.getCoursesTaught()){
+            if (prof_course.equals(exam.getCourse())){
                 return true;
             }
         }

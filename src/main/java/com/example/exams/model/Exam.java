@@ -1,5 +1,6 @@
 package com.example.exams.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -14,22 +15,28 @@ public class Exam {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long examID;
 
-    private String courseExamined;
+    @ManyToOne
+    @JoinColumn(name = "course_id", nullable = false)
+    private Course course;
+
     private int duration;
     private double score;
 
     @Temporal(TemporalType.DATE)
     private Date examDate;
 
+    private String time;
+
     @OneToMany(cascade = CascadeType.ALL)
     private List<Question> questionList;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "exam_professors",
             joinColumns = @JoinColumn(name = "exam_id"),
             inverseJoinColumns = @JoinColumn(name = "username")
     )
+    @JsonManagedReference
     private List<Professor> professors;
 
     @ManyToMany

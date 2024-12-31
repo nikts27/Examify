@@ -26,14 +26,6 @@ public abstract class User {
     @Enumerated(EnumType.STRING)
     protected USER_ROLE role;
 
-    @ElementCollection
-    @CollectionTable(
-            name = "user_courses",
-            joinColumns = @JoinColumn(name = "username")
-    )
-    @Column(name = "course_name")
-    private List<String> userCourses;
-
     private String refreshToken;
 
     public abstract boolean equals(User user);

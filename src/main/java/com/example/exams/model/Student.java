@@ -10,6 +10,9 @@ import java.util.List;
 @DiscriminatorValue("ROLE_STUDENT")
 public class Student extends User {
 
+    @ManyToMany(mappedBy = "students")
+    private List<Course> coursesTaken;
+
     @ManyToMany(mappedBy = "assignedStudents")
     private List<Exam> examsEnrolled;
 

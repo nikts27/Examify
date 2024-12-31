@@ -5,6 +5,8 @@ import com.example.exams.repository.ExamRepository;
 import com.example.exams.repository.QuestionRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ExamService {
 
@@ -14,6 +16,10 @@ public class ExamService {
     public ExamService(ExamRepository examRepository, QuestionRepository questionRepository) {
         this.examRepository = examRepository;
         this.questionRepository = questionRepository;
+    }
+
+    public List<Exam> getAllExams() {
+        return examRepository.findAll();
     }
 
     public Exam findExamById(Long id) throws Exception {
