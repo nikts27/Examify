@@ -15,7 +15,7 @@ public abstract class Question {
 
     @ManyToOne
     @JoinColumn(name = "exam_id")
-    private Exam exam;
+    private long examId;
 
     @Enumerated(EnumType.STRING)
     protected QUESTION_TYPE questionType;
@@ -23,8 +23,4 @@ public abstract class Question {
     private String correctAnswer;
 
     private double score;
-
-    public boolean equals(Long questionId) {
-        return Objects.equals(this.id, questionId);
-    }
 }

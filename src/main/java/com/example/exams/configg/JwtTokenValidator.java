@@ -3,6 +3,7 @@ package com.example.exams.configg;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,14 +18,19 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.util.List;
+import java.util.Collections;
 
 public class JwtTokenValidator extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        System.out.println("JWT Filter - Request URL: " + request.getRequestURL());
+        System.out.println("JWT Filter - Method: " + request.getMethod());
+        System.out.println("JWT Filter - Headers: " + Collections.list(request.getHeaderNames()));
+
         String jwt = request.getHeader(JwtConstant.JWT_HEADER);
 
-        if(jwt!=null){
+        if(jwt!=null && jwt.startsWith("Bearer ")){
             jwt = jwt.substring(7);
 
             try{
@@ -45,10 +51,25 @@ public class JwtTokenValidator extends OncePerRequestFilter {
                 );
 
                 SecurityContextHolder.getContext().setAuthentication(auth);
-            }catch (Exception e){
-                throw new RuntimeException("invalid token...");
+            } catch (ExpiredJwtException e) {
+                // Handle expired token by checking for refresh token request
+                if (isRefreshTokenRequest(request)) {
+                    filterChain.doFilter(request, response);
+                } else {
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.getWriter().write("Token expired. Please use refresh token to obtain a new access token.");
+                    return;
+                }
+            } catch (Exception e){
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write("Invalid token");
+                return;
             }
         }
         filterChain.doFilter(request, response);
+    }
+
+    private boolean isRefreshTokenRequest(HttpServletRequest request) {
+        return request.getRequestURI().equals("/auth/refresh-token");
     }
 }

@@ -50,6 +50,11 @@ public class AuthController {
         String jwtAccess = JwtProvider.generateAccessToken(auth);
         String jwtRefresh = JwtProvider.generateRefreshToken(auth);
 
+        //Save user's refresh token to user repository
+        User user = userRepository.findByUsername(username);
+        user.setRefreshToken(jwtRefresh);
+        userRepository.save(user);
+
         // Prepare the response
         AuthResponse res = new AuthResponse();
         res.setJwtAccess(jwtAccess);
@@ -73,7 +78,20 @@ public class AuthController {
         String username = JwtProvider.getUsernameFromToken(refreshToken);
 
         User user = userRepository.findByUsername(username);
-        Authentication auth = authenticate(user.getUsername(), user.getPassword());
+
+        UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+        if (userDetails == null) {
+            System.out.println("User not found: " + username);
+            throw new BadCredentialsException("Invalid username!");
+        }
+
+        Authentication auth;
+        if (user.getPassword().equals(userDetails.getPassword())) {
+            auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        } else {
+            throw new BadCredentialsException("Invalid password!");
+        }
+
         String newAccessToken = JwtProvider.generateAccessToken(auth);
 
         AuthResponse res = new AuthResponse();
@@ -99,9 +117,6 @@ public class AuthController {
     }
 
     private boolean isPasswordValid(String rawPassword, String encodedPassword) {
-        boolean matches = passwordEncoder.matches(rawPassword, encodedPassword);
-        System.out.println("Raw Password: " + rawPassword);
-        System.out.println("Encoded Password: " + encodedPassword);
-        return matches;
+        return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 }
