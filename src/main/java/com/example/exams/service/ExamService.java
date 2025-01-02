@@ -35,16 +35,13 @@ public class ExamService {
         if (question == null) {
             throw new Exception("Question not found!");
         }
-        return question.getExam();
+        return question.getExamId();
     }
 
     public Exam saveExam(Professor professor, Exam exam) {
-        for(User prof: exam.getProfessors()){
-            if(professor.equals(prof)){
-                return examRepository.save(exam);
-            }
+        if (!exam.getProfessors().contains(professor)) {
+            exam.addProfessor(professor);
         }
-        exam.addProfessor(professor);
         return examRepository.save(exam);
     }
 

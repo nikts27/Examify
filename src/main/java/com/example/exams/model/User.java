@@ -27,6 +27,4 @@ public abstract class User {
     protected USER_ROLE role;
 
     private String refreshToken;
-
-    public abstract boolean equals(User user);
 }

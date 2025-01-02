@@ -18,11 +18,16 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.util.List;
+import java.util.Collections;
 
 public class JwtTokenValidator extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        System.out.println("JWT Filter - Request URL: " + request.getRequestURL());
+        System.out.println("JWT Filter - Method: " + request.getMethod());
+        System.out.println("JWT Filter - Headers: " + Collections.list(request.getHeaderNames()));
+
         String jwt = request.getHeader(JwtConstant.JWT_HEADER);
 
         if(jwt!=null && jwt.startsWith("Bearer ")){

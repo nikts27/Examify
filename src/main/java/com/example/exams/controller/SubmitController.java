@@ -32,7 +32,7 @@ public class SubmitController {
             @RequestHeader("Authorization") String jwt,
             @RequestBody Submission submission) throws Exception {
         Student student = (Student)userService.findUserProfileByJwt(jwt);
-        if(!isUserAllowed(submission.getExam(), student)){
+        if(!isStudentAllowed(submission.getExam(), student)){
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body("Student not allowed to submit for this exam");
         }
@@ -57,7 +57,7 @@ public class SubmitController {
             @PathVariable Long examId) throws Exception {
         Professor professor = (Professor)userService.findUserProfileByJwt(jwt);
         Exam exam = examService.findExamById(examId);
-        if(!isUserAllowed(exam, professor)){
+        if(!isProfAllowed(exam, professor)){
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body("Professor not allowed to get submissions for this exam");
         }
@@ -75,7 +75,7 @@ public class SubmitController {
         Professor professor = (Professor)userService.findUserProfileByJwt(jwt);
         Submission submission = submissionService.findSubmissionById(submissionId);
         Exam exam = submission.getExam();
-        if(!isUserAllowed(exam, professor)){
+        if(!isProfAllowed(exam, professor)){
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body("Professor not allowed to get submissions for this exam");
         }
@@ -85,9 +85,18 @@ public class SubmitController {
     }
 
 
-    private boolean isUserAllowed(Exam exam, User user) {
-        for(String user_course: user.getUserCourses()){
-            if (user_course.equals(exam.getCourseExamined())){
+    private boolean isProfAllowed(Exam exam, Professor prof) {
+        for(Course prof_course: prof.getCoursesTaught()){
+            if (prof_course.equals(exam.getCourse())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isStudentAllowed(Exam exam, Student stud) {
+        for(Course stud_course: stud.getCoursesTaken()){
+            if (stud_course.equals(exam.getCourse())){
                 return true;
             }
         }

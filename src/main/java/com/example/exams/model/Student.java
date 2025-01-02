@@ -1,5 +1,6 @@
 package com.example.exams.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -8,6 +9,7 @@ import java.util.List;
 @Entity
 @Data
 @DiscriminatorValue("ROLE_STUDENT")
+@JsonIgnoreProperties("students")
 public class Student extends User {
 
     @ManyToMany(mappedBy = "students")
@@ -18,9 +20,4 @@ public class Student extends User {
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<Submission> submissions;
-
-    @Override
-    public boolean equals(User user) {
-        return this.username.equals(user.getUsername());
-    }
 }

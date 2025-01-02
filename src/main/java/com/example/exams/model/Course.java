@@ -1,5 +1,6 @@
 package com.example.exams.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,7 +17,7 @@ public class Course {
     private String name;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-    private List<Exam> exams;
+    private long examId;
 
     @ManyToMany
     @JoinTable(
@@ -24,6 +25,7 @@ public class Course {
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "username")
     )
+    @JsonBackReference
     private List<Professor> professors;
 
     @ManyToMany
@@ -33,10 +35,5 @@ public class Course {
             inverseJoinColumns = @JoinColumn(name = "username")
     )
     private List<Student> students;
-
-    public void addExam(Exam exam) {
-        exams.add(exam);
-        exam.setCourse(this);
-    }
 
 }
