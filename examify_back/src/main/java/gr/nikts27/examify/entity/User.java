@@ -12,10 +12,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 import java.util.List;
 
-/**
- * @author Cleavest on 3/1/2025
- */
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
