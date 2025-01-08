@@ -5,9 +5,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-/**
- * @author Cleavest on 3/1/2025
- */
 public interface ExamRepository extends MongoRepository<Exam, String> {
 
     List<Exam> findByCourseId(String course);
