@@ -12,7 +12,7 @@ import Auth from "@/page/Auth/Auth.jsx";
 import AnswerQuestionsPage from "@/page/Exam/AnswerQuestionsPage.jsx";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
-import {getUser} from "@/State/Auth/Action.js";
+import {getUser, logout} from "@/State/Auth/Action.js";
 
 function App() {
     const {auth} = useSelector(store=>store);
@@ -21,7 +21,17 @@ function App() {
 
     useEffect(() => {
         dispatch(getUser(auth.jwt || localStorage.getItem("jwt")));
-    }, [auth.jwt]);
+
+        const handleBeforeUnload = () => {
+            dispatch(logout());
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [auth.jwt, dispatch]);
 
     return (
         <>
