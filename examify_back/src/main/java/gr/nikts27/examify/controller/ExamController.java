@@ -44,7 +44,7 @@ public class ExamController {
     }
 
     @GetMapping("/{examId}")
-    public ResponseEntity<Exam> getExamById(@PathVariable String examId) throws Exception {
+    public ResponseEntity<Exam> getExamById(@PathVariable String examId) {
         Exam exam = examService.getByExamId(examId);
         return new ResponseEntity<>(exam, HttpStatus.ACCEPTED);
     }
