@@ -49,7 +49,6 @@ function App() {
                         <Route path="/student" element={<StudentHome/>} />
                         <Route path="/calendar" element={<CalendarPage user={auth.user}/>} />
                         <Route path="/build-exam" element={<BuildExamPage profName={auth.user.name}/>} />
-                        <Route path="/set-date-time" element={<SetDateAndTimeForm/>} />
                         <Route path="/see-submissions" element={<SeeSubmissionsPage/>} />
                         <Route path="/grade-exam" element={<GradeExamPage/>} />
                         <Route path="/start-exam" element={<AnswerQuestionsPage/>} />
