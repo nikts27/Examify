@@ -6,7 +6,6 @@ import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS, LOGOUT
 } from "@/State/Auth/ActionTypes.js";
-import axios from "axios";
 import axiosInstance from "@/State/Auth/Interceptor.js";
 
 export const login = (userData, navigate) => async(dispatch) => {
@@ -42,7 +41,7 @@ export const refreshToken = () => async (dispatch) => {
     }
 
     try {
-        const response = await axios.post(`${baseUrl}/auth/refresh-token`, { refreshToken });
+        const response = await axiosInstance.post(`${baseUrl}/auth/refresh-token`, { refreshToken });
         const { jwtAccess, jwtRefresh } = response.data;
 
         localStorage.setItem("jwt", jwtAccess);

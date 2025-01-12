@@ -1,11 +1,7 @@
 package gr.nikts27.examify.controller;
 
-import gr.nikts27.examify.dto.DeleteQuestionRequest;
-import gr.nikts27.examify.entity.Course;
 import gr.nikts27.examify.entity.Exam;
-import gr.nikts27.examify.entity.StudentExam;
 import gr.nikts27.examify.entity.User;
-import gr.nikts27.examify.service.CourseService;
 import gr.nikts27.examify.service.ExamService;
 import gr.nikts27.examify.service.UserService;
 import lombok.AllArgsConstructor;
@@ -13,12 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.chrono.ChronoLocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 

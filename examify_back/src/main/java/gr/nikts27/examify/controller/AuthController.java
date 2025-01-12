@@ -31,12 +31,6 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
-//    @PostMapping("test")
-//    public ResponseEntity<String> test(){
-//        String username = "test";
-//        String password = "test";
-//    }
-
     @PostMapping("/signin")
     public ResponseEntity<AuthResponse> login(@RequestBody Map<String, String> loginData) {
         String username = loginData.get("username");
