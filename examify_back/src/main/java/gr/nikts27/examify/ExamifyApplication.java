@@ -1,21 +1,12 @@
 package gr.nikts27.examify;
 
-import gr.nikts27.examify.entity.Course;
-import gr.nikts27.examify.entity.User;
-import gr.nikts27.examify.obj.Role;
 import gr.nikts27.examify.repository.CourseRepository;
 import gr.nikts27.examify.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @SpringBootApplication
 public class ExamifyApplication {
