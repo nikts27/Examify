@@ -144,8 +144,14 @@ function ExamsTable() {
         return `${durationInMinutes} minutes`;
     };
 
-    const handleExamClick = (examId, courseName) => {
-        navigate('/see-submissions', { state: { examId, courseName } });
+    const handleExamClick = (examId, examName, examDate) => {
+        navigate('/see-submissions', { 
+            state: { 
+                examId, 
+                examName, 
+                examDate 
+            }
+        });
     };
 
     const cleanTitle = (title) => {
@@ -221,6 +227,12 @@ function ExamsTable() {
         };
     };
 
+    const isExamEnded = (endTime) => {
+        const now = new Date().getTime();
+        const examEnd = new Date(endTime.replace(' ', 'T')).getTime();
+        return now > examEnd;
+    };
+
     if (loading) return (
         <div className="flex justify-center items-center h-32">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-500"></div>
@@ -283,8 +295,17 @@ function ExamsTable() {
                                 <TableCell className="text-center">
                                     <Button
                                         size="icon"
-                                        className="bg-indigo-500 hover:bg-indigo-600 text-white rounded-full p-2 transition-colors"
-                                        onClick={() => handleExamClick(exam.examId, exam.title)}
+                                        className={`${
+                                            isExamEnded(exam.endTime)
+                                                ? 'bg-indigo-500 hover:bg-indigo-600'
+                                                : 'bg-gray-300 cursor-not-allowed'
+                                        } text-white rounded-full p-2 transition-colors`}
+                                        onClick={() => handleExamClick(exam.examId, exam.title, exam.startTime)}
+                                        disabled={!isExamEnded(exam.endTime)}
+                                        title={!isExamEnded(exam.endTime) 
+                                            ? "Cannot view submissions until exam has ended" 
+                                            : "View submissions"
+                                        }
                                     >
                                         <EyeOpenIcon className="h-5 w-5"/>
                                     </Button>

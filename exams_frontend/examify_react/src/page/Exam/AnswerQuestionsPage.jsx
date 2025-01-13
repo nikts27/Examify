@@ -99,12 +99,6 @@ function AnswerQuestionsPage() {
         return () => clearInterval(timer);
     }, [currentExam, calculateTimeLeft]);
 
-    if (loading) return <div>Loading exam...</div>;
-    if (error) return <div>Error loading exam: {error}</div>;
-    if (!currentExam) return null;
-
-    const questions = getAllQuestions(currentExam);
-
     const handleChange = (index, value) => {
         setStudentAnswers((prevAnswers) => ({
             ...prevAnswers,
@@ -112,7 +106,7 @@ function AnswerQuestionsPage() {
         }));
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = useCallback(() => {
         if (window.confirm("Are you sure you want to submit your answers? Empty answers will be counted as wrong.")) {
             try {
                 const allQuestions = getAllQuestions(currentExam);
@@ -136,7 +130,27 @@ function AnswerQuestionsPage() {
                 console.error('Submit exam error:', error);
             }
         }
-    };
+    }, [currentExam, studentAnswers, dispatch, navigate]);
+
+    useEffect(() => {
+        const handleBeforeUnload = (event) => {
+            handleSubmit();
+            event.preventDefault();
+            event.returnValue = '';
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [handleSubmit]);
+
+    if (loading) return <div>Loading exam...</div>;
+    if (error) return <div>Error loading exam: {error}</div>;
+    if (!currentExam) return null;
+
+    const questions = getAllQuestions(currentExam);
 
     if (isExamOver) {
         return (

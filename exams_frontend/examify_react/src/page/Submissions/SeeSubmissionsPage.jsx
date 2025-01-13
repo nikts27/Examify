@@ -116,7 +116,7 @@ function SeeSubmissionsPage() {
                                 Exam Submissions
                             </h1>
                             <p className="text-gray-500 mt-1">
-                                {examName} - {examDate}
+                                {examName || "Unknown Exam"} - {examDate || "Unknown Date"}
                             </p>
                         </div>
                         <Button 
