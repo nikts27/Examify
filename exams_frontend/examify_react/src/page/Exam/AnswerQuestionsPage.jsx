@@ -13,8 +13,8 @@ import {
 } from "@mui/material";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchExamById} from "../../State/Exam/Action";
-import {submitExam} from "../../State/Submit/Action";
+import {fetchExamById} from "@/State/Exam/Action.js";
+import {submitExam} from "@/State/Submit/Action.js";
 
 function AnswerQuestionsPage() {
     const location = useLocation();

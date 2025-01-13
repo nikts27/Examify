@@ -1,13 +1,13 @@
 // eslint-disable-next-line no-unused-vars
 import React, {useEffect, useState} from 'react';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table.jsx";
-import { Button } from "@/components/ui/button.jsx";
-import { EyeOpenIcon } from "@radix-ui/react-icons";
-import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchUserCourses } from '@/State/Course/Action.js';
-import { fetchUserExams, deleteExam } from '@/State/Exam/Action.js';
-import { fetchExamSubmissions } from '@/State/Submit/Action.js';
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table.jsx";
+import {Button} from "@/components/ui/button.jsx";
+import {EyeOpenIcon} from "@radix-ui/react-icons";
+import {useNavigate} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchUserCourses} from '@/State/Course/Action.js';
+import {deleteExam, fetchUserExams} from '@/State/Exam/Action.js';
+import {fetchExamSubmissions} from '@/State/Submit/Action.js';
 
 
 function CoursesTable() {
@@ -27,11 +27,9 @@ function CoursesTable() {
     }, [dispatch, user?.username]);
 
     const hasExistingExam = (courseId) => {
-        const hasExam = userExams.some(exam => {
+        return userExams.some(exam => {
             return exam.courseId === courseId;
         });
-        
-        return hasExam;
     };
 
     const handleCourseClick = (course) => {
