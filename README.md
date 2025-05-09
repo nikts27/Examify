@@ -1,69 +1,67 @@
 
 # 🎓 Examify
 
-Το **Examify** είναι μια διαδικτυακή πλατφόρμα εξετάσεων που επιτρέπει στους εξεταστές να δημιουργούν, να διαχειρίζονται και να αξιολογούν εξετάσεις, ενώ παρέχει στους φοιτητές τη δυνατότητα να συμμετέχουν σε εξετάσεις και να βλέπουν τα αποτελέσματά τους.
+**Examify** is an online university exam platform that allows examiners to create, manage, and grade exams, while students can view, attempt, and submit exams.
 
 ---
 
-## 🛠️ Τεχνολογίες
+## 🛠️ Technologies Used
 
 - **Backend**: Java, Spring Boot, Spring Security, Hibernate
-- **Βάση Δεδομένων**: MongoDB
-- **Ασφάλεια API**: JWT Authentication, Role-Based Access Control (RBAC)
+- **Database**: MongoDB
+- **API Security**: JWT Authentication, Role-Based Access Control (RBAC)
 - **Frontend**: React JS
 - **Containerization**: Docker, Docker Compose
 
 ---
 
-## ✨ Χαρακτηριστικά
+## ✨ Features
 
-### 👨‍🏫 Εξεταστές
+### 👨‍🏫 Examiners
 
-- Δημιουργία, ενημέρωση και διαγραφή εξετάσεων.
-- Προσθήκη αντικειμενικών (πολλαπλής επιλογής/Σωστό-Λάθος) και υποκειμενικών ερωτήσεων.
-- Χειροκίνητη αξιολόγηση υποκειμενικών απαντήσεων και υπολογισμός τελικών βαθμολογιών.
+- Create, update, and delete exams.
+- Add objective (MCQ/True-False) and subjective questions.
+- Manually grade subjective answers and compute final scores.
 
-### 👩‍🎓 Φοιτητές
+### 👩‍🎓 Students
 
-- Προβολή διαθέσιμων εξετάσεων.
-- Συμμετοχή και υποβολή εξετάσεων.
-- Προβολή αποτελεσμάτων μετά την αξιολόγηση.
+- View available exams.
+- Attempt and submit exams.
+- View results once grading is complete.
 
 ---
 
-## 🚀 Οδηγίες Εκτέλεσης με Docker
+## 🚀 Running with Docker
 
-### Προαπαιτούμενα
+### Prerequisites
 
 - Docker
 - Docker Compose
 
-### Βήματα
+### Steps
 
-1. Κλωνοποίησε το αποθετήριο:
+1. Clone the repository:
 
    ```bash
    git clone https://github.com/nikts27/Examify.git
    cd Examify
    ```
 
-2. Εκτέλεσε την εφαρμογή:
+2. Run the application using Docker:
 
    ```bash
    docker-compose up --build
    ```
 
-3. Η εφαρμογή θα είναι διαθέσιμη στα εξής URLs:
+3. The application will be available at:
 
    - Frontend: `http://localhost:3000`
    - Backend API: `http://localhost:8080/api`
-   - MongoDB (μέσω container): `mongodb://localhost:27017`
+   - MongoDB: `mongodb://localhost:27017`
 
 ---
 
-## 🧪 Δοκιμές
-
-Για να εκτελέσεις τις δοκιμές τοπικά:
+## 🧪 Running Tests
 
 ### Backend
 
@@ -81,20 +79,20 @@ npm test
 
 ---
 
-## 📄 Άδεια Χρήσης
+## 📄 License
 
-Αυτό το έργο διανέμεται υπό την άδεια MIT.
+This project is licensed under the MIT License.
 
 ---
 
-## 🤝 Συνεισφορά
+## 🤝 Contributing
 
-Οι συνεισφορές είναι ευπρόσδεκτες! Για να συνεισφέρεις:
+Contributions are welcome! To contribute:
 
-1. Κάνε fork το αποθετήριο.
-2. Δημιούργησε ένα νέο branch: `git checkout -b feature/YourFeature`
-3. Κάνε commit τις αλλαγές σου: `git commit -m 'Προσθήκη νέου χαρακτηριστικού'`
-4. Κάνε push το branch: `git push origin feature/YourFeature`
-5. Άνοιξε ένα Pull Request.
+1. Fork the repository.
+2. Create a new branch: `git checkout -b feature/YourFeature`
+3. Commit your changes: `git commit -m 'Add new feature'`
+4. Push to the branch: `git push origin feature/YourFeature`
+5. Open a Pull Request.
 
 ---
